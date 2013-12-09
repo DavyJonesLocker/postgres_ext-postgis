@@ -22,3 +22,7 @@ class MiniTest::Spec
     DatabaseCleaner.clean
   end
 end
+
+def connection
+  ActiveRecord::Base.connection
+end

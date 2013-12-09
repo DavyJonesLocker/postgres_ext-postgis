@@ -1,8 +1,6 @@
 require 'test_helper'
 
 describe 'Geometry Migrations' do
-  let(:connection) { ActiveRecord::Base.connection }
-
   after { connection.drop_table :data_types }
 
   it 'creates geometry columns' do

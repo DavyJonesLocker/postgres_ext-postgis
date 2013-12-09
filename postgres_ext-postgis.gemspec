@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'postgres_ext-postgis'
   spec.version       = PostgresExt::Postgis::VERSION
   spec.authors       = ['Dan McClain']
-  spec.email         = ['git@danmcclain.net']
+  spec.email         = ['rubygems@danmcclain.net']
   spec.description   = %q{TODO: Write a gem description}
   spec.summary       = %q{TODO: Write a gem summary}
   spec.homepage      = ""

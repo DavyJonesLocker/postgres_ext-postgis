@@ -3,6 +3,7 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
     geometry: { name: 'geometry' }
   }
 
+  require 'byebug'
   def self.prepended(klass)
     klass::NATIVE_DATABASE_TYPES.merge! POSTGIS_DATABASE_TYPES
     klass::TableDefinition.send(:prepend, TableDefinition)

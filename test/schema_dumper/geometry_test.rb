@@ -1,18 +1,24 @@
 require 'test_helper'
 
 describe 'geometry schema dump' do
-  after { connection.drop_table :testings }
+  let(:stream) { StringIO.new }
+  let(:schema) { stream.string }
 
-  it 'generates the geometry column statements' do
-    stream = StringIO.new
-
+  before do
     connection.create_table :testings do |t|
       t.geometry :geo
     end
 
     ActiveRecord::SchemaDumper.dump(connection, stream)
-    output = stream.string
+  end
 
-    output.must_match /t\.geometry "geo"/
+  after { connection.drop_table :testings }
+
+  it 'does not include the spatial_ref_sys table' do
+    schema.wont_match /create_table \"spatial_ref_sys\"/
+  end
+
+  it 'generates the geometry column statements' do
+    schema.must_match /t\.geometry "geo"/
   end
 end

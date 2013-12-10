@@ -1,5 +1,23 @@
 module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters
   module PostgreSQLColumn
+    def self.prepended(klass)
+      klass.class_eval do
+        class << klass
+          prepend ClassMethods
+        end
+      end
+    end
+
+    module ClassMethods
+      def wkb_parser
+        @wkb_parser ||= RGeo::WKRep::WKBParser.new
+      end
+
+      def string_to_geometry(value)
+        wkb_parser.parse value
+      end
+    end
+
     private
 
     def simplified_type(field_type)

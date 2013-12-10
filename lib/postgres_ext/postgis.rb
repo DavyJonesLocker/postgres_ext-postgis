@@ -5,8 +5,8 @@ module PostgresExt
 end
 
 require 'postgres_ext/postgis/version'
-require 'postgres_ext/postgis/active_record'
 require 'active_record/connection_adapters/postgresql_adapter'
+require 'postgres_ext/postgis/active_record'
 require 'active_record/schema_dumper'
 
 ActiveRecord::SchemaDumper.ignore_tables << 'spatial_ref_sys'

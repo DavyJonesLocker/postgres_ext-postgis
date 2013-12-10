@@ -2,13 +2,18 @@ require 'active_record'
 require 'minitest/autorun'
 require 'bourne'
 require 'postgres_ext/postgis'
+require 'rgeo'
 require 'database_cleaner'
+
 unless ENV['CI'] || RUBY_PLATFORM =~ /java/
   require 'byebug'
 end
 
 require 'dotenv'
 Dotenv.load
+
+class Place < ActiveRecord::Base
+end
 
 ActiveRecord::Base.establish_connection
 DatabaseCleaner.strategy = :deletion
@@ -19,6 +24,10 @@ class MiniTest::Spec
   end
 
   before do
+    DatabaseCleaner.clean
+  end
+
+  after do
     DatabaseCleaner.clean
   end
 end

@@ -42,6 +42,7 @@ end
 namespace :db do
   task :load_db_settings do
     require 'active_record'
+    require 'postgres_ext/postgis'
     unless ENV['DATABASE_URL']
       require 'dotenv'
       Dotenv.load
@@ -60,6 +61,10 @@ namespace :db do
     ActiveRecord::Base.establish_connection
 
     ActiveRecord::Base.connection.enable_extension 'postgis'
+
+    ActiveRecord::Base.connection.create_table :places, force: true do |t|
+      t.geometry :location
+    end
 
     puts 'Database migrated'
   end

@@ -10,11 +10,15 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters
 
     module ClassMethods
       def wkb_parser
-        @wkb_parser ||= RGeo::WKRep::WKBParser.new
+        @wkb_parser ||= RGeo::WKRep::WKBParser.new nil, support_ewkb: true
+      end
+
+      def wkb_generator
+        @wkb_generator ||= RGeo::WKRep::WKBGenerator.new hex_format: true, type_format: :ewkb, emit_ewkb_srid: true
       end
 
       def wkt_parser
-        @wkt_parser ||= RGeo::WKRep::WKTParser.new
+        @wkt_parser ||= RGeo::WKRep::WKTParser.new nil, support_ewkt: true
       end
 
       def string_to_geometry(value)
@@ -22,6 +26,14 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters
           wkt_parser.parse value
         else
           wkb_parser.parse value
+        end
+      end
+
+      def geometry_to_string(value)
+        if RGeo::Feature::Instance
+          wkb_generator.generate value
+        else
+          value
         end
       end
     end

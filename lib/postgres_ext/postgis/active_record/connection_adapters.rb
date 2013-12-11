@@ -13,8 +13,16 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters
         @wkb_parser ||= RGeo::WKRep::WKBParser.new
       end
 
+      def wkt_parser
+        @wkt_parser ||= RGeo::WKRep::WKTParser.new
+      end
+
       def string_to_geometry(value)
-        wkb_parser.parse value
+        if value.index('(')
+          wkt_parser.parse value
+        else
+          wkb_parser.parse value
+        end
       end
     end
 

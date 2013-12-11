@@ -15,4 +15,13 @@ SQL
     place.location.x.must_equal 1
     place.location.y.must_equal 1
   end
+
+  it 'parses WKT attributes into RGeo objects' do
+    place = Place.new
+
+    place.location = 'POINT(1 1)'
+    place.location.must_be_kind_of RGeo::Geos::CAPIPointImpl
+    place.location.x.must_equal 1
+    place.location.y.must_equal 1
+  end
 end

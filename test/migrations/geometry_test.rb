@@ -16,4 +16,18 @@ describe 'Geometry Migrations' do
     geo_1.sql_type.must_equal 'geometry'
     geo_2.sql_type.must_equal 'geometry'
   end
+
+  it 'creates geometry columns with type and SRID' do
+    connection.create_table :data_types do |t|
+      t.geometry :geo_1, spatial_type: :linestring, srid: 4326
+      t.column   :geo_2, :geometry, spatial_type: :linestring, srid: 4326
+    end
+
+    columns = connection.columns(:data_types)
+    geo_1 = columns.find { |c| c.name == 'geo_1' }
+    geo_2 = columns.find { |c| c.name == 'geo_2' }
+
+    geo_1.sql_type.must_equal 'geometry(LineString,4326)'
+    geo_2.sql_type.must_equal 'geometry(LineString,4326)'
+  end
 end

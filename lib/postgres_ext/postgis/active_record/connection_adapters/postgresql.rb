@@ -1,0 +1,1 @@
+require 'postgres_ext/postgis/active_record/connection_adapters/postgresql/schema_statements'

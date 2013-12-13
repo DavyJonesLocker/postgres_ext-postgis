@@ -6,6 +6,8 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
   def self.prepended(klass)
     klass::NATIVE_DATABASE_TYPES.merge! POSTGIS_DATABASE_TYPES
     klass::TableDefinition.send :prepend, TableDefinition
+    klass::ColumnDefinition.send :prepend, ColumnDefinition
+    klass::SchemaCreation.send :prepend, SchemaCreation
     klass::OID.send :prepend, OID
     klass.send :prepend, Quoting
   end
@@ -16,8 +18,24 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
     end
   end
 
+  module ColumnDefinition
+    attr_accessor :spatial_type, :srid
+  end
+
   module TableDefinition
     include ColumnMethods
+
+    def column(name, type, options = {})
+      super
+      column = self[name]
+
+      if type.to_s == 'geometry'
+        column.srid = options[:srid]
+        column.spatial_type = options[:spatial_type]
+      end
+
+      self
+    end
   end
 
   module Quoting

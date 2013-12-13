@@ -3,6 +3,7 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters
     def self.prepended(klass)
       klass.class_eval do
         class << klass
+          attr_reader :geometry_type, :srid
           prepend ClassMethods
         end
       end
@@ -52,3 +53,4 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters
 end
 
 require 'postgres_ext/postgis/active_record/connection_adapters/postgresql_adapter'
+require 'postgres_ext/postgis/active_record/connection_adapters/postgresql'

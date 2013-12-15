@@ -2,8 +2,8 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters
   module PostgreSQLColumn
     def self.prepended(klass)
       klass.class_eval do
+        attr_reader :geometry_type, :srid
         class << klass
-          attr_reader :geometry_type, :srid
           prepend ClassMethods
         end
       end
@@ -39,11 +39,44 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters
       end
     end
 
+    def initialize(name, default, oid_type, sql_type = nil, null = true)
+      super
+      if type == :geometry
+        @srid          = extract_srid sql_type
+        @geometry_type = extract_geometry_type sql_type
+      end
+    end
+
     private
+
+    def extract_srid(sql_type)
+      if match = geometry_type_regex.match(sql_type)
+        match[:srid]
+      end
+    end
+
+    def extract_geometry_type(sql_type)
+      if match = geometry_type_regex.match(sql_type)
+        match[:geom_type].downcase.to_sym.inspect
+      end
+    end
+
+    def geometry_type_regex
+      /geometry\((?<geom_type>\w+),(?<srid>\d+)\)/i
+    end
+
+    def extract_limit(sql_type)
+      case sql_type
+      when /^geometry/i
+        nil
+      else
+        super
+      end
+    end
 
     def simplified_type(field_type)
       case field_type
-      when 'geometry'
+      when /geometry(\(\w,\d\))?/
         :geometry
       else
         super

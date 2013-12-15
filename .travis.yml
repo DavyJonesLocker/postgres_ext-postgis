@@ -1,0 +1,15 @@
+language: ruby
+
+rvm:
+- 2.0.0
+
+before_script:
+- psql -c 'create database postgres_ext_postgis_test;' -U postgres -h localhost
+- rake db:migrate
+
+env: DATABASE_URL=postgres://postgres@localhost/postgres_ext_postgis_test
+
+notifications:
+  hipchat:
+    rooms:
+      secure: YTnjwnQBCUm8/D+QbUlxKgH/LgKRXDgoed9nbnlW4LIiuguUAxhqrZGlusVvXs8b2IMuw3A4rHOpV/NEr6mwoA7eP6/Jn+KSWOIOIftRBW3p0INHSeKpHiPZ5pTVudgPAsfE5pojHTRXM19bf6RAiyOr02SAiafwsr6Nx1VCNTY=

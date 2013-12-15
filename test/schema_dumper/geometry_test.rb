@@ -7,6 +7,7 @@ describe 'geometry schema dump' do
   before do
     connection.create_table :testings do |t|
       t.geometry :geo
+      t.geometry :lines, spatial_type: :linestring, srid: 4326
     end
 
     ActiveRecord::SchemaDumper.dump(connection, stream)
@@ -20,5 +21,9 @@ describe 'geometry schema dump' do
 
   it 'generates the geometry column statements' do
     schema.must_match /t\.geometry "geo"/
+  end
+
+  it 'captures geometry settings in column statments' do
+    schema.must_match /t\.geometry "lines", srid: 4326, geometry_type: :linestring/
   end
 end

@@ -1,9 +1,14 @@
 require 'active_record'
-require 'minitest/autorun'
 require 'bourne'
 require 'postgres_ext/postgis'
 require 'rgeo'
 require 'database_cleaner'
+
+if defined?(M)
+    require 'minitest/spec'
+else
+    require 'minitest/autorun'
+end
 
 unless ENV['CI'] || RUBY_PLATFORM =~ /java/
   require 'byebug'

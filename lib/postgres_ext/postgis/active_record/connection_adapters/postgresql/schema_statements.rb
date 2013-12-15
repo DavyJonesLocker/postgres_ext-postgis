@@ -15,20 +15,20 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
   end
 
   POSTGIS_SPATIAL_TYPES = {
-    point:               'POINT',
-    pointm:              'POINTM',
-    linestring:          'LINESTRING',
-    linestringm:         'LINESTRINGM',
-    polygon:             'POLYGON',
-    polygonm:            'POLYGONM',
-    multipoint:          'MULTIPOINT',
-    multipointm:         'MULTIPOINTM',
-    multilinestring:     'MULTILINESTRING',
-    multilinestringm:    'MULTILINESTRINGM',
-    multipolygon:        'MULTIPOLYGON',
-    multipolygonm:       'MULTIPOLYGONM',
-    geometrycollection:  'GEOMETRYCOLLECTION',
-    geometrycollectionm: 'GEOMETRYCOLLECTIONM',
-    geometry:            'GEOMETRY'
+    point:               'Point',
+    pointm:              'PointM',
+    linestring:          'LineString',
+    linestringm:         'LineStringM',
+    polygon:             'Polygon',
+    polygonm:            'PolygonM',
+    multipoint:          'MultiPoint',
+    multipointm:         'MultiPointM',
+    multilinestring:     'MultiLineString',
+    multilinestringm:    'MultiLineStringM',
+    multipolygon:        'MultiPolygon',
+    multipolygonm:       'MultiPolygonM',
+    geometrycollection:  'GeometryCollection',
+    geometrycollectionm: 'GeometryCollectionM',
+    geometry:            'Geometry'
   }
 end

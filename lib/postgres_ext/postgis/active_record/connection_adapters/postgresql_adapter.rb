@@ -12,6 +12,23 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
     klass.send :prepend, Quoting
   end
 
+  def prepare_column_options(column, types)
+    spec = super
+
+    if column.type == :geometry
+      if column.srid
+        spec[:srid] = column.srid
+        spec[:geometry_type] = column.geometry_type
+      end
+    end
+
+    spec
+  end
+
+  def migration_keys
+    super + [:srid, :geometry_type]
+  end
+
   module ColumnMethods
     def geometry(name, options = {})
       column(name, 'geometry', options)

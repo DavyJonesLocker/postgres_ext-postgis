@@ -1,7 +1,6 @@
 require 'test_helper'
 
 describe 'geometry casts' do
-
   it 'converts WKB from PostgreSQL into RGeo objects' do
     connection.execute <<-SQL
     INSERT INTO places (location)
@@ -9,7 +8,7 @@ describe 'geometry casts' do
 SQL
     place = Place.first
 
-    place.location.must_be_kind_of RGeo::Geos::CAPIPointImpl
+    (RGeo::Feature::Point === place.location).must_equal true
     place.location.x.must_equal 1
     place.location.y.must_equal 1
     place.location.srid.must_equal 26918
@@ -19,7 +18,7 @@ SQL
     place = Place.new
 
     place.location = 'SRID=4623;POINT(1 1)'
-    place.location.must_be_kind_of RGeo::Geos::CAPIPointImpl
+    (RGeo::Feature::Point === place.location).must_equal true
     place.location.x.must_equal 1
     place.location.y.must_equal 1
     place.location.srid.must_equal 4623
@@ -31,7 +30,7 @@ SQL
     place.location = 'SRID=1;POINT(2 2)'
     place.save
     place.reload
-    place.location.must_be_kind_of RGeo::Geos::CAPIPointImpl
+    (RGeo::Feature::Point === place.location).must_equal true
     place.location.x.must_equal 2
     place.location.y.must_equal 2
     place.location.srid.must_equal 1

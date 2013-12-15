@@ -1,9 +1,9 @@
-
 module PostgresExt
   module Postgis
   end
 end
 
+require 'rgeo'
 require 'postgres_ext/postgis/version'
 require 'active_record/connection_adapters/postgresql_adapter'
 require 'postgres_ext/postgis/active_record'

@@ -5,9 +5,9 @@ require 'rgeo'
 require 'database_cleaner'
 
 if defined?(M)
-    require 'minitest/spec'
+  require 'minitest/spec'
 else
-    require 'minitest/autorun'
+  require 'minitest/autorun'
 end
 
 unless ENV['CI'] || RUBY_PLATFORM =~ /java/

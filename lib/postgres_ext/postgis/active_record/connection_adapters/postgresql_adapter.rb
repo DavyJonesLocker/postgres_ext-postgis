@@ -56,6 +56,14 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
   end
 
   module Quoting
+    def quote(value, column = nil)
+      if column && column.type == :geometry
+        ActiveRecord::ConnectionAdapters::PostgreSQLColumn.geometry_to_string(value)
+      else
+        super
+      end
+    end
+
     def type_cast(value, column, array_member = false)
       return super unless column
 

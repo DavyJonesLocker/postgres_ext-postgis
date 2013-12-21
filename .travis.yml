@@ -9,7 +9,9 @@ before_script:
 - psql -c 'create database postgres_ext_postgis_test;' -U postgres -h localhost
 - rake db:migrate
 
-env: DATABASE_URL=postgres://postgres@localhost/postgres_ext_postgis_test
+env:
+- DATABASE_URL=postgres://postgres@localhost/postgres_ext_postgis_test?pool=5
+- N=5
 
 notifications:
   hipchat:

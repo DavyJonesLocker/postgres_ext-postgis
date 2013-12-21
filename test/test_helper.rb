@@ -10,6 +10,23 @@ else
   require 'minitest/autorun'
 end
 
+require 'minitest/hell' unless ENV['DEBUG']
+
+module MTest
+  def before_setup
+    ActiveRecord::Base.connection.execute 'BEGIN'
+    super
+  end
+
+  def after_teardown
+    super
+    
+    ActiveRecord::Base.connection.execute 'ROLLBACK'
+  end
+end
+
+MiniTest::Unit::TestCase.send :include, MTest
+
 unless ENV['CI'] || RUBY_PLATFORM =~ /java/
   require 'byebug'
 end
@@ -21,7 +38,13 @@ class Place < ActiveRecord::Base
 end
 
 ActiveRecord::Base.establish_connection
-DatabaseCleaner.strategy = :deletion
+ActiveRecord::Base.connection.class.class_eval do
+  def begin_db_transaction
+  end
+
+  def commit_db_transaction
+  end
+end
 
 class MiniTest::Spec
   class << self
@@ -29,11 +52,11 @@ class MiniTest::Spec
   end
 
   before do
-    DatabaseCleaner.clean
+    # DatabaseCleaner.clean
   end
 
   after do
-    DatabaseCleaner.clean
+    # DatabaseCleaner.clean
   end
 end
 

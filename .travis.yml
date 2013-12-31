@@ -2,8 +2,10 @@ language: ruby
 
 rvm:
 - 2.0.0
+- 2.1.0
 before_install:
 - sudo apt-get install libgeos-dev
+- gem install bundler -v '= 1.5.1'
 
 before_script:
 - psql -c 'create database postgres_ext_postgis_test;' -U postgres -h localhost

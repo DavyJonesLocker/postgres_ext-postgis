@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = PostgresExt::Postgis::VERSION
   spec.authors       = ['Dan McClain']
   spec.email         = ['rubygems@danmcclain.net']
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Adding support for PostGIS types and clean PostGIS querying extensions to ActiveRecord}
+  spec.summary       = %q{Extending ActiveRecord's geospatial awareness with PostGIS}
   spec.homepage      = ""
   spec.license       = "MIT"
 

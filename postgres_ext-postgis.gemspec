@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['rubygems@danmcclain.net']
   spec.description   = %q{Adding support for PostGIS types and clean PostGIS querying extensions to ActiveRecord}
   spec.summary       = %q{Extending ActiveRecord's geospatial awareness with PostGIS}
-  spec.homepage      = ""
+  spec.homepage      = 'https://github.com/dockyard/postgres_ext-postgis'
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -31,6 +31,6 @@ Gem::Specification.new do |spec|
   if RUBY_PLATFORM =~ /java/
     spec.add_development_dependency 'activerecord-jdbcpostgresql-adapter', '1.3.0.beta2'
   else
-    spec.add_development_dependency 'pg', '~> 0.13.2'
+    spec.add_development_dependency 'pg', '> 0.13.2'
   end
 end

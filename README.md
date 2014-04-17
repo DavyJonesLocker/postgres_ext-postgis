@@ -33,7 +33,8 @@ end
 
 ### Type Casting
 
-PostGIS geometry types are converted to [RGeo]() objects. You can set
+PostGIS geometry types are converted to
+[RGeo](http://dazuma.github.io/rgeo/) objects. You can set
 your PostGIS types in ActiveRecord using either the Extended Well-Known Binary
 (WKB) or Extended Well-Known Text (WKT) representation:
 
@@ -44,7 +45,8 @@ user.location = 'SRID=4623;POINT(1 1)'
 ### Querying
 
 #### Contains
-Using the [contains querying interface from postgres\_ext](), we can
+Using the [contains querying interface from postgres\_ext that arrays
+utilize](https://github.com/dockyard/postgres_ext/blob/master/docs/querying.md#---array-contains-operator), we can
 query if geometry column contains the specified object
 
 ```ruby

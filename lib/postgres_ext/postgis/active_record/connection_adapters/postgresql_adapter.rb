@@ -53,6 +53,15 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
 
       self
     end
+
+    def new_column_definition(name, type, options)
+      column = super
+
+      column.srid = options[:srid]
+      column.spatial_type = options[:spatial_type]
+
+      column
+    end
   end
 
   module Quoting

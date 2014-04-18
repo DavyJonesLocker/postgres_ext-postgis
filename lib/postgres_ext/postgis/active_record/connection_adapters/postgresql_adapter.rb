@@ -66,7 +66,7 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
 
   module Quoting
     def quote(value, column = nil)
-      if column && column.type == :geometry
+      if column && (column.type == :geometry || column.type == :geography)
         ActiveRecord::ConnectionAdapters::PostgreSQLColumn.geometry_to_string(value)
       else
         super
@@ -78,7 +78,7 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
 
       case value
       when RGeo::Feature::Instance
-        return super unless /geometry/ =~ column.sql_type
+        return super unless /geometry|geography/ =~ column.sql_type
         ActiveRecord::ConnectionAdapters::PostgreSQLColumn.geometry_to_string(value)
       else
         super

@@ -89,6 +89,7 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
   module OID
     def self.prepended(klass)
       klass.register_type 'geometry', OID::Geometry.new
+      klass.register_type 'geography', OID::Geometry.new
     end
 
     class Geometry < ActiveRecord::ConnectionAdapters::PostgreSQLAdapter::OID::Type

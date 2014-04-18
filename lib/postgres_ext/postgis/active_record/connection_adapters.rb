@@ -76,6 +76,8 @@ module PostgresExt::Postgis::ActiveRecord::ConnectionAdapters
 
     def simplified_type(field_type)
       case field_type
+      when /geography/
+        :geography
       when /geometry(\(\w,\d\))?/
         :geometry
       else

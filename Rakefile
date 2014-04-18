@@ -64,6 +64,7 @@ namespace :db do
 
     ActiveRecord::Base.connection.create_table :places, force: true do |t|
       t.geometry :location
+      t.column :location_2, :geography
     end
 
     puts 'Database migrated'
